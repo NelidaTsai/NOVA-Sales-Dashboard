@@ -19,29 +19,16 @@
 
 ---
 
-## 2. 技術規格
+## 2. 功能規格
 
-| 項目 | 規格 |
-|---|---|
-| 檔案 | 單一 `index.html`，CSS 寫在 `<style>`、JavaScript 寫在 `<script>` |
-| 外部函式庫（CDN） | Chart.js 4.4.0（圖表）、chartjs-plugin-datalabels 2.2.0（圖上數字）、SheetJS 0.18.5（產生／讀取 Excel） |
-| 開啟方式 | 本機雙擊即可（`file://`），或透過 GitHub Pages 網址開啟 |
-| 假資料 | 開啟頁面時，用「固定亂數種子」在瀏覽器裡產生假的 Excel 檔，再交給網頁本身的 Excel 解析程式處理（和上傳真實檔案走同一套流程）；每次打開數字都一樣 |
-| 儲存 | 解析後的資料存在瀏覽器 `localStorage`（Cache Data 頁可以檢視、刪除） |
-| 隱私 | 不包含任何真實公司、客戶、產品型號、人名、金額；不會讀取訪客電腦裡的檔案 |
-
----
-
-## 3. 功能規格
-
-### 3.0 共通操作
+### 2.0 共通操作
 - **左側選單**：分成 Sales、Devices & SI、VU Sales、Admin 四大群組，點選後立即切換頁面（不重新載入），目前所在頁面以綠色反白標示。
 - **手機版**：螢幕寬度不足時選單自動收起，點左上角的漢堡按鈕（☰）展開，點選頁面後自動收回。
 - **圖表共通互動**：滑鼠移到長條或折線點上會出現提示框（月份、數值）；點圖例可以隱藏／顯示某一組資料；長條上方直接標示數字。
 - **彈窗**：所有明細彈窗右上角都有同一款 × 關閉按鈕。
 - **金額單位**：卡片與圖表以「千美元（K）」顯示；明細表可切換「1／K」單位。
 
-### 3.1 Sales › Overview（全球業績總覽）
+### 2.1 Sales › Overview（全球業績總覽）
 
 **區域篩選**
 - 右上角 **Region** 下拉選單：ALL、TW、ANZ、EU、VJP、MN、JPD、VU。
@@ -73,7 +60,7 @@
 - 圖表：三年逐月長條並排，紅色折線是今年相對去年的 YoY 成長率（右側軸）。
 - **點圖表**會打開完整資料表（每年逐月數字＋YoY%），下方有 **Custom Range YoY** 計算器：選擇起訖月份後按 Calculate YoY，算出該區間今年 vs 去年的成長率。
 
-### 3.2 Devices & SI › Device Insights（裝置數據）
+### 2.2 Devices & SI › Device Insights（裝置數據）
 
 - 右上角 **Region** 選單：Global 或 US、EU、JP、AU、TW、LATAM、SEA、MEA，切換後整頁數字改為該區域。
 - **NOVA Regional Progress Overview**：5 個甜甜圈
@@ -86,14 +73,14 @@
 - **Monthly and Weekly Devices Onboarding**：Total、BTC、DTC、Paid 四條趨勢線；過去的月份每月一點，本月則每週一點；上方卡片顯示最新數字與「vs last week」。
 - **Connection License Distribution**：依組織類型與授權等級（xPro、xStd、Unlicensed、免費組織）交叉統計 BTC、VSS、DTC、CloudSight 的裝置數與各種比例。
 
-### 3.3 Devices & SI › Top SI Analysis（SI 經銷商分析）
+### 2.3 Devices & SI › Top SI Analysis（SI 經銷商分析）
 
 - 三張 KPI 卡片：SI 總數、SI 管理的 NOVA 裝置數、每個 SI 平均裝置數。
 - **TOP SI Detailed Classification Data** 表格：SI 名稱、Email、主要區域、裝置總數、DTC、BTC（免費／付費）、IP Speaker、其他、組織數、純 BTC／純 DTC／混合組織數。
   - **點欄位標題排序**（再點一次反向），表格可上下捲動。
   - 依右上角 Region 篩選，只看該區域的 SI。
 
-### 3.4 Devices & SI › NOVA KA Analysis（重點客戶分析）
+### 2.4 Devices & SI › NOVA KA Analysis（重點客戶分析）
 
 - **KA Comparison 折線圖**：10 家重點客戶的裝置數成長（2025 年加總 + 2026 年逐月／逐期），每家一種顏色。
   - 點圖例可隱藏／顯示某家客戶。
@@ -101,7 +88,7 @@
 - **Key Accounts 表格**：排名、客戶名稱、區域、是否為 KA（綠色 KA 標籤）、最新總數與各期數字；沒有資料的期間顯示「-」。
   - **點任一列**，下方明細圖就切換成該客戶的單獨趨勢圖。
 
-### 3.5 VU Sales（美國／加拿大經銷銷售）
+### 2.5 VU Sales（美國／加拿大經銷銷售）
 
 **頁面上方篩選（五個子頁共用）**
 - **Region**：兩層選單，先選大區（US-East／US-West／Canada），再選子區域（共 13 個）；交易依郵遞區號／州別自動分區。
@@ -145,7 +132,7 @@
 - **Partner Level Distribution**：ELITE／SELECT／AUTHORIZED 三個等級的家數長條。
 - **Top 10 Partners by YTD Sales**：排名、名稱、等級、VPP ID、金額。
 
-### 3.6 Admin
+### 2.6 Admin
 
 **Data Upload**
 - 10 張上傳卡片，每張對應一種報表 Excel：OPEN PO、OPEN PO - JPD（可輸入日圓匯率）、Actual、Actual History（可多檔）、Region Mapping、NOVA POS（可多檔）、Sales Budget、Rolling、Device Snapshot、VU Regional Sales Data。
@@ -170,22 +157,7 @@
 
 ---
 
-## 4. 假資料設計
-
-| 資料 | 內容 |
-|---|---|
-| Sales Budget／Rolling／Actual／Open PO | 7 個區域 × 12 個月，依季節係數上下浮動；Actual 只到 9 月 |
-| Actual History | 2024、2025、2026 三年，逐年成長 |
-| Device Snapshot | 2026/8/7 起每週一份、共 11 份，每週裝置數成長約 2% |
-| VU Regional Sales | 13 個 Sub Region、48 家虛構經銷商、22 家未註冊客戶、10 個虛構產品型號 |
-| NOVA POS | 2024–2026 每年一個檔案、每月一張工作表 |
-| KA | 10 家虛構重點客戶 |
-
-公司名稱由字庫隨機組合（如 Cobalt Integration Group、Falcon Security LLC），email 全部是 `@demo-partner.example`。
-
----
-
-## 5. 視覺風格
+## 3. 視覺風格
 
 | 項目 | 規格 |
 |---|---|
@@ -197,7 +169,7 @@
 
 ---
 
-## 6. 開發流程與版本紀錄
+## 3. 開發流程與版本紀錄
 
 每一版的做法都一樣：**先用文字跟 AI 說清楚想要什麼 → AI 實作 → 我實際操作、截圖 → 把看到的問題或新想法回報給 AI → 再修改**，反覆進行。
 
