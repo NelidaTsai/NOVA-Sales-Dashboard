@@ -36,72 +36,145 @@
 
 ---
 
-## 3. 畫面架構
+## 3. 功能規格
 
-```
-┌────────────────┬───────────────────────────────────────────┐
-│ NOVA           │ 頁面標題                    [Region ▼]    │
-│ SALES          ├───────────────────────────────────────────┤
-│  ▸ Overview    │                                           │
-│ DEVICES & SI   │                                           │
-│  ▸ Device Insights          主內容區                       │
-│  ▸ Top SI Analysis   （KPI 卡片／圖表／表格）              │
-│  ▸ NOVA KA Analysis                                        │
-│ VU SALES       │                                           │
-│  ▸ Overview / Product Analysis / NOVA SI                  │
-│  ▸ VPP Partners / Partner Progress                         │
-│ ADMIN          │                                           │
-│  ▸ Data Upload / Cache Data / Reports / Settings           │
-└────────────────┴───────────────────────────────────────────┘
-```
+### 3.0 共通操作
+- **左側選單**：分成 Sales、Devices & SI、VU Sales、Admin 四大群組，點選後立即切換頁面（不重新載入），目前所在頁面以綠色反白標示。
+- **手機版**：螢幕寬度不足時選單自動收起，點左上角的漢堡按鈕（☰）展開，點選頁面後自動收回。
+- **圖表共通互動**：滑鼠移到長條或折線點上會出現提示框（月份、數值）；點圖例可以隱藏／顯示某一組資料；長條上方直接標示數字。
+- **彈窗**：所有明細彈窗右上角都有同一款 × 關閉按鈕。
+- **金額單位**：卡片與圖表以「千美元（K）」顯示；明細表可切換「1／K」單位。
 
-- 左側固定 Sidebar 分成四大群組，點選後切換頁面（不重新載入），目前頁面反白。
-- 手機寬度時 Sidebar 收起，左上角漢堡按鈕可展開。
+### 3.1 Sales › Overview（全球業績總覽）
+
+**區域篩選**
+- 右上角 **Region** 下拉選單：ALL、TW、ANZ、EU、VJP、MN、JPD、VU。
+- 切換後，四張 KPI 卡片、月度追蹤圖、年度比較圖全部重新計算。
+
+**四張 KPI 甜甜圈卡片**
+
+| 卡片 | 計算方式 | 卡片下方 | 點擊後 |
+|---|---|---|---|
+| YTD（9A vs. 9B） | 1–9 月實際業績 ÷ 1–9 月預算 | 預算、實際金額；ALL 時列出各區域佔比 | 跳出「區域 × 月份」明細表 |
+| MTD Achievement | 最近一個月實際 ÷ 當月預算 | 當月預算、實際 | 同上，只看當月 |
+| 8A+4R | 8 個月實際 + 4 個月滾動預估，對比全年預算 | 全年預算、8A+4R 金額 | 同上，實際月份與預估月份並列 |
+| Open PO | 未出貨訂單總額；紅色區塊是交期未定（TBD） | Open PO、TBD 金額 | 跳出 Open PO 依月份／TBD 的明細 |
+
+- 甜甜圈中間顯示百分比；達成率 ≥ 100% 顯示綠色。
+
+**「區域 × 月份」明細彈窗**
+- 列＝各區域、欄＝各月份，最後兩欄是期間預算與達成率，最下面一列是合計。
+- 右上角可切換金額單位（1／K）。
+- 點表格中的數字可以再往下看該區域、該月份的**客戶明細**，並可按 Back 回上一層。
+
+**月度追蹤圖（Budget vs. Rolling vs. Actual + Open PO）**
+- 每個月並排顯示：Budget（灰）、Rolling（淺藍）、Actual（藍），未來月份顯示 Open PO（綠）與 TBD（紅）堆疊。
+- 右側軸的橘色折線是每月達成率。
+- 長條上方標示金額，多個標籤會自動錯開不重疊。
+
+**Year-over-Year Monthly Comparison（年度比較）**
+- 上方三張卡片：2024、2025、2026 各年度實際業績總額。
+- 圖表：三年逐月長條並排，紅色折線是今年相對去年的 YoY 成長率（右側軸）。
+- **點圖表**會打開完整資料表（每年逐月數字＋YoY%），下方有 **Custom Range YoY** 計算器：選擇起訖月份後按 Calculate YoY，算出該區間今年 vs 去年的成長率。
+
+### 3.2 Devices & SI › Device Insights（裝置數據）
+
+- 右上角 **Region** 選單：Global 或 US、EU、JP、AU、TW、LATAM、SEA、MEA，切換後整頁數字改為該區域。
+- **NOVA Regional Progress Overview**：5 個甜甜圈
+  - DTC Unlicensed／BTC Unlicensed：未購買授權的裝置比例。
+  - DTC Expiring／BTC Expiring：付費裝置中 30 天內到期的比例。
+  - Cloud Storage：已購買雲端備份的裝置中，實際啟用的比例。
+  - 每個甜甜圈下方顯示「+N（+x%）vs last week」，和上週相比的變化。
+- **Device Numbers**：Total、BTC、DTC、VSS、CloudSight 五張卡片，括號內是與上週相比的增減。
+- **Device Numbers by Region**：各區域裝置數與佔比表格，裝置最多的區域以綠色、最少的以紅色標示。
+- **Monthly and Weekly Devices Onboarding**：Total、BTC、DTC、Paid 四條趨勢線；過去的月份每月一點，本月則每週一點；上方卡片顯示最新數字與「vs last week」。
+- **Connection License Distribution**：依組織類型與授權等級（xPro、xStd、Unlicensed、免費組織）交叉統計 BTC、VSS、DTC、CloudSight 的裝置數與各種比例。
+
+### 3.3 Devices & SI › Top SI Analysis（SI 經銷商分析）
+
+- 三張 KPI 卡片：SI 總數、SI 管理的 NOVA 裝置數、每個 SI 平均裝置數。
+- **TOP SI Detailed Classification Data** 表格：SI 名稱、Email、主要區域、裝置總數、DTC、BTC（免費／付費）、IP Speaker、其他、組織數、純 BTC／純 DTC／混合組織數。
+  - **點欄位標題排序**（再點一次反向），表格可上下捲動。
+  - 依右上角 Region 篩選，只看該區域的 SI。
+
+### 3.4 Devices & SI › NOVA KA Analysis（重點客戶分析）
+
+- **KA Comparison 折線圖**：10 家重點客戶的裝置數成長（2025 年加總 + 2026 年逐月／逐期），每家一種顏色。
+  - 點圖例可隱藏／顯示某家客戶。
+  - **在線上按右鍵**可切換該條線的數字標籤位置，避免數字擠在一起。
+- **Key Accounts 表格**：排名、客戶名稱、區域、是否為 KA（綠色 KA 標籤）、最新總數與各期數字；沒有資料的期間顯示「-」。
+  - **點任一列**，下方明細圖就切換成該客戶的單獨趨勢圖。
+
+### 3.5 VU Sales（美國／加拿大經銷銷售）
+
+**頁面上方篩選（五個子頁共用）**
+- **Region**：兩層選單，先選大區（US-East／US-West／Canada），再選子區域（共 13 個）；交易依郵遞區號／州別自動分區。
+- **State**：只看某一州。
+- **月份**：切換要看哪個月份的資料。
+
+**Overview**
+- 五個甜甜圈：POS 達成率（YTD）、POS MTD 達成率、Pipeline 達成率（YTD）、Pipeline MTD 達成率、VPP Partner Active 數；每張卡片下方列出目標、實際，以及 NOVA 產品佔比。
+- **Monthly POS Performance**／**Monthly Pipeline Performance**：每月目標（灰）vs 實際（綠）長條圖。
+- **Top 10 VPP Partners by YTD Sales** 橫條圖、**Monthly Hit Rate Trend** 達成率趨勢折線。
+
+**Product Analysis**
+- 四張卡片：產品數、YTD 產品銷售額、最大類別、最熱銷產品。
+- 產品類別（Frontend／Backend／NOVA）營收甜甜圈、數量甜甜圈。
+- **Top 15 Products by Sales** 長條圖、**Monthly Product Sales Trend** 面積圖。
+
+**NOVA SI（NOVA 產品客戶清單）**
+- 三張 KPI 卡片：NOVA SI 客戶數、2026 YTD、2026 MTD。
+  - 點客戶數卡片 → 「每月客戶數」圖表彈窗。
+  - 點 YTD 卡片 → 「營收拆解」彈窗：2024–2026 每月營收比較圖，並可自訂區間計算 YoY。
+- 客戶表格：狀態（Active／Inactive／Unregistered）、客戶名稱、每月金額、YTD、去年與前年加總、平均、YoY、交易次數。
+  - **搜尋框**即時篩選客戶名稱。
+  - **快速篩選按鈕**：All／Active／Inactive／Unregistered，按鈕上顯示筆數。
+  - **Columns** 按鈕：勾選要顯示哪些欄位。
+  - **點欄位標題排序**。
+  - **點客戶名稱** → 產品分布彈窗（買了哪些型號、金額、數量、佔比）。
+  - 滑鼠移到狀態標籤上，顯示這位客戶是怎麼對應到經銷商編號的。
+- 未註冊客戶的判斷：客戶名稱比對時忽略大小寫、空白、標點與 Inc／LLC／Co 等公司字尾，避免同一家公司因拼法不同被算成兩家。
+
+**VPP Partners（經銷商明細）**
+- 三張 KPI 卡片：經銷商數、YTD 銷售、MTD 銷售。
+- 經銷商表格：狀態、VPP ID、名稱、州、等級、今年 YTD、去年、前年、平均、YoY、交易次數。
+  - 搜尋（VPP ID 或名稱）、快速篩選（All／Active／Inactive／NOVA）、Columns 選欄位、點標題排序。
+  - **點 VPP ID** → 該經銷商的產品分布彈窗（型號、類別、YTD／MTD、數量、交易數、佔比長條）。
+- **Active 定義**：最近三個月內有任何一筆金額 > 0 的購買紀錄；退貨、折讓不算。
+
+**Partner Progress（經銷商成長）**
+- 三張卡片：經銷商總數、Active 數、今年新加入數。
+- **Partner Growth Trend**：每月 Active 經銷商數折線圖。
+- **New Partners Acquired**：每月新加入經銷商數。
+- **Partner Level Distribution**：ELITE／SELECT／AUTHORIZED 三個等級的家數長條。
+- **Top 10 Partners by YTD Sales**：排名、名稱、等級、VPP ID、金額。
+
+### 3.6 Admin
+
+**Data Upload**
+- 10 張上傳卡片，每張對應一種報表 Excel：OPEN PO、OPEN PO - JPD（可輸入日圓匯率）、Actual、Actual History（可多檔）、Region Mapping、NOVA POS（可多檔）、Sales Budget、Rolling、Device Snapshot、VU Regional Sales Data。
+- 作業公開版：**不會開啟檔案選擇視窗、不會讀取訪客的檔案**。點任一張卡片會載入對應的**假資料 Excel 檔**，卡片變成綠框並顯示假檔名。
+- **Generate Dashboard** 按鈕：依已載入的檔案重新計算並產生整個儀表板。
+- **Reload all demo data** 按鈕：清掉快取、一次重新載入全部假資料。
+
+**Cache Data**
+- 分成 Actual、Device Snapshot、Actual History、NOVA POS、Region Mapping 五區，列出瀏覽器裡快取的每一筆（檔名、快照日期或年份）。
+- 每筆旁邊有 × 可單獨移除；每區右上角有 **Clear All**（Region Mapping 是 **Reset to default**）。
+
+**Reports**
+- **Print report**：列印目前的儀表板。
+- **Export all data**：下載目前的整理後數據。
+- **Data info**／**Help**：資料說明與使用說明。
+
+**Settings**
+- 預設區域（勾選）、預設月份範圍（全年／各季／上下半年）。
+- 顯示選項：熱力圖、自動更新圖表、顯示圖例。
+- 數字格式：千分位符號、小數位數。
+- **Preview** 預覽、**Save & Apply** 儲存（存在瀏覽器，下次打開保留）、**Restore defaults** 還原。
 
 ---
 
-## 4. 功能規格
-
-### 4.1 Sales › Overview（全球業績總覽）
-- **Region 下拉選單**：ALL／TW／ANZ／EU／VJP／MN／JPD／VU，切換後所有卡片與圖表立即更新。
-- **四張 KPI 甜甜圈卡片**
-  - YTD 達成率：今年到目前為止的實際業績 ÷ 預算，下方列出各區域佔比。
-  - MTD 達成率：最近一個月的實際 ÷ 預算。
-  - 8A+4R：已結帳月份的實際 + 未來月份的滾動預估，對比全年預算。
-  - Open PO：未出貨訂單總額，紅色部分是交期未定（TBD）。
-- **月度追蹤圖**：每月 Budget、Rolling、Actual、Open PO、TBD 長條，加上達成率折線（右側軸）；點圖例可隱藏／顯示某一組。
-- **Year-over-Year 比較**：2024／2025／2026 三年逐月長條 + YoY% 折線，上方顯示各年度總額。
-
-### 4.2 Devices & SI
-- **Device Insights**
-  - Regional Progress Overview：5 個甜甜圈（未授權比例、即將到期比例、雲端儲存使用率…），附「vs last week」增減。
-  - Device Numbers：總數、BTC、DTC、VSS、CloudSight 卡片，附與上週相比的增減。
-  - Device Numbers by Region：各區域裝置數表格。
-  - 每月／每週裝置上線趨勢折線圖。
-- **Top SI Analysis**：SI 總數、SI 管理的裝置數、平均數；SI 明細表格可**點欄位標題排序**。
-- **NOVA KA Analysis**：重點客戶（KA）比較折線圖（可勾選要顯示的客戶）、KA 清單表格，點任一列在下方顯示該客戶的單獨趨勢圖。
-
-### 4.3 VU Sales（美國／加拿大區域經銷）
-- 上方篩選：**Region**（兩層：New Region → Sub Region）、**State**、**月份**。
-- **Overview**：POS 達成率、MTD 達成率、Pipeline 達成率、VPP Partner Active 數等甜甜圈卡片；每月 POS／Pipeline 目標 vs 實際長條圖；Top 10 經銷商排行。
-- **Product Analysis**：產品類別營收／數量甜甜圈圖、Top 15 產品長條圖、每月產品銷售趨勢。
-- **NOVA SI**：客戶清單（已註冊經銷商 + 未註冊客戶），可**搜尋**、依 Active／Inactive／Unregistered **篩選**、**選擇顯示欄位**、點欄位**排序**；點客戶名稱跳出產品分布彈窗。
-- **VPP Partners**：經銷商明細表，同樣可搜尋、篩選、排序、選欄位；點 VPP ID 跳出該經銷商的**產品分布彈窗**。
-  - **Active 定義**：最近三個月內有任何一筆金額 > 0 的購買紀錄。
-- **Partner Progress**：經銷商總數／Active 數／新加入數、每月 Active 成長趨勢、新經銷商趨勢、等級分布（ELITE／SELECT／AUTHORIZED）、Top 10 排行。
-
-### 4.4 Admin
-- **Data Upload（示範版）**
-  - 10 張上傳卡片，每張對應一種報表 Excel；作業公開版**不會開啟檔案選擇視窗、不會讀取訪客的檔案**。
-  - 點任一張卡片會載入對應的**假資料 Excel 檔**（卡片上顯示假檔名），再按 **Generate Dashboard** 重新產生儀表板。
-  - 「Reload all demo data」按鈕可一次重新載入全部假資料。
-- **Cache Data**：列出瀏覽器裡快取的每一筆資料（檔名、快照日期、年份），可逐筆移除或「Clear All」。
-- **Reports**：列印報表、匯出資料。
-- **Settings**：預設區域、月份範圍、千分位格式、小數位數等顯示偏好。
-
----
-
-## 5. 假資料設計
+## 4. 假資料設計
 
 | 資料 | 內容 |
 |---|---|
@@ -116,7 +189,7 @@
 
 ---
 
-## 6. 視覺風格
+## 5. 視覺風格
 
 | 項目 | 規格 |
 |---|---|
@@ -128,7 +201,7 @@
 
 ---
 
-## 7. 開發流程與版本紀錄
+## 6. 開發流程與版本紀錄
 
 每一版的做法都一樣：**先用文字跟 AI 說清楚想要什麼 → AI 實作 → 我實際操作、截圖 → 把看到的問題或新想法回報給 AI → 再修改**，反覆進行。
 
